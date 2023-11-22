@@ -2,23 +2,23 @@
 {
     internal class Turtle
     {
-        int x = 10;
-        int y = 5;
-        ConsoleColor? pen = ConsoleColor.Yellow;
-        Direction direction = Direction.Right;
+        int _x = 1;
+        int _y = 1;
+        ConsoleColor? _pen = ConsoleColor.Yellow;
+        Direction _direction = Direction.Right;
 
         public void Go()
         {
             // justere posisjon ut fra retning
-            if (direction == Direction.Left) x--;
-            else if (direction == Direction.Right) x++;
-            else if (direction == Direction.Down) y++;
-            else if (direction == Direction.Up) y--;
+            if (_direction == Direction.Left) _x--;
+            else if (_direction == Direction.Right) _x++;
+            else if (_direction == Direction.Down) _y++;
+            else if (_direction == Direction.Up) _y--;
 
             // tegne opp ruten vi kommer til, hvis penn er nede
-            Console.SetCursorPosition(x, y);
-            Console.BackgroundColor = pen.Value;
-            var c = direction switch
+            Console.SetCursorPosition(_x, _y);
+            Console.BackgroundColor = _pen ?? ConsoleColor.Black;
+            var c = _direction switch
             {
                 Direction.Left => '<',
                 Direction.Right => '>',
@@ -29,11 +29,14 @@
             Console.Write(c);
         }
 
-        public void Turn(int angle)
+        public void Turn(Direction direction)
         {
-            if (direction == Direction.Right && angle == -1) direction = Direction.Up;
-            else if (direction == Direction.Up && angle == 1) direction = Direction.Right;
-            else direction++;
+            _direction = direction;
+        }
+
+        public void SetPen(ConsoleColor? pen)
+        {
+            _pen = pen;
         }
     }
 }
